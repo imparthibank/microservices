@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityManagement.Application.Queries
+namespace UserManagement.Application.Queries.GetUserById
 {
     public class GetUserByIdQuery : IRequest<UserDto>
     {

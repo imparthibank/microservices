@@ -1,5 +1,5 @@
 ﻿using IdentityManagement.Application.DTOs;
-using IdentityManagement.Application.Queries;
+using UserManagement.Application.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +11,7 @@ namespace IdentityManagement.API.Controllers
     {
         private readonly IMediator _mediator;
 
-        public UsersController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public UsersController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(Guid id)

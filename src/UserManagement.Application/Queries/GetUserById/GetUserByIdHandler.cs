@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IdentityManagement.Application.DTOs;
-using IdentityManagement.Application.Queries;
 using IdentityManagement.Domain.Interfaces;
 using MediatR;
 using System;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityManagement.Application.Handlers
+namespace UserManagement.Application.Queries.GetUserById
 {
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserDto>
     {

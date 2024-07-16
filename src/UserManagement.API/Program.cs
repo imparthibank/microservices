@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityManagement.Infrastructure.Repositories;
 using IdentityManagement.Domain.Interfaces;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,10 @@ builder.Services.AddDbContext<IdentityManagementDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddMediatR(typeof(Program));
-builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

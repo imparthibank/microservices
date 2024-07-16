@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using IdentityManagement.Application.DTOs;
-using IdentityManagement.Application.Handlers;
-using IdentityManagement.Application.Queries;
 using IdentityManagement.Domain.Entities;
 using IdentityManagement.Domain.Interfaces;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UserManagement.Application.Queries.GetUserById;
 
 namespace IdentityManagement.Tests
 {

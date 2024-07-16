@@ -1,0 +1,2 @@
+F:\Repoes\microservices\src\UserManagement.Infrastructure> dotnet ef migrations add InitialCreate -p F:\Repoes\microservices\src\UserManagement.Infrastructure\UserManagement.Infrastructure.csproj -s F:\Repoes\microservices\src\UserManagement.API\UserManagement.API.csproj
+F:\Repoes\microservices\src\UserManagement.Infrastructure> dotnet ef database update -p F:\Repoes\microservices\src\UserManagement.Infrastructure\UserManagement.Infrastructure.csproj -s F:\Repoes\microservices\src\UserManagement.API\UserManagement.API.csproj
