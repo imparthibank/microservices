@@ -2,6 +2,7 @@
 using UserManagement.Application.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.Application.Commands.AddUserCommand;
 
 namespace IdentityManagement.API.Controllers
 {
@@ -12,6 +13,19 @@ namespace IdentityManagement.API.Controllers
         private readonly IMediator _mediator;
 
         public UsersController(IMediator mediator) => _mediator = mediator;
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser([FromBody] AddUserCommand command)
+        {
+            if (command == null)
+            {
+                return BadRequest();
+            }
+
+            var userId = await _mediator.Send(command);
+
+            return Ok(userId);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(Guid id)

@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using IdentityManagement.Infrastructure.Data;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using IdentityManagement.Infrastructure.Repositories;
+using FluentValidation.AspNetCore;
 using IdentityManagement.Domain.Interfaces;
+using IdentityManagement.Infrastructure.Data;
+using IdentityManagement.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using UserManagement.Application.Commands.AddUserCommand;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +14,15 @@ builder.Services.AddDbContext<IdentityManagementDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-//builder.Services.AddMediatR(typeof(Program));
+// Configure MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
+// Configure AutoMapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+// Configure FluentValidation
+builder.Services.AddControllers()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddUserCommandValidator>());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
