@@ -1,8 +1,10 @@
-﻿using IdentityManagement.Application.DTOs;
-using UserManagement.Application.Queries.GetUserById;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using IdentityManagement.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using UserManagement.Application.Commands.AddUserCommand;
+using UserManagement.Application.Commands.AddUser;
+using UserManagement.Application.Queries.GetUserById;
 
 namespace IdentityManagement.API.Controllers
 {
@@ -11,15 +13,23 @@ namespace IdentityManagement.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IValidator<AddUserCommand> _validator;
 
-        public UsersController(IMediator mediator) => _mediator = mediator;
+
+        public UsersController(IMediator mediator, IValidator<AddUserCommand> validator)
+        {
+            _mediator = mediator;
+            _validator = validator;
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] AddUserCommand command)
         {
-            if (command == null)
+            ValidationResult result = await _validator.ValidateAsync(command);
+
+            if (!result.IsValid)
             {
-                return BadRequest();
+                return BadRequest(result);
             }
 
             var userId = await _mediator.Send(command);

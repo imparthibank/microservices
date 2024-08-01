@@ -3,7 +3,7 @@ using IdentityManagement.Domain.Entities;
 using IdentityManagement.Domain.Interfaces;
 using MediatR;
 
-namespace UserManagement.Application.Commands.AddUserCommand
+namespace UserManagement.Application.Commands.AddUser
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Guid>
     {
@@ -16,8 +16,6 @@ namespace UserManagement.Application.Commands.AddUserCommand
         }
         public async Task<Guid> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            //var user = new User() { Id = Guid.NewGuid(), Email = request.Email, Username = request.UserName, PasswordHash = request.Password };
-            // Map the command to the User entity
             var user = _mapper.Map<User>(request);
             await _userRepository.AddAsync(user);
             return user.Id;
