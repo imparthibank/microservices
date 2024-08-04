@@ -13,19 +13,19 @@ namespace IdentityManagement.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IValidator<AddUserCommand> _validator;
+        private readonly IValidator<AddUserCommand> _addUserCommandValidator;
 
-
-        public UsersController(IMediator mediator, IValidator<AddUserCommand> validator)
+        public UsersController(IMediator mediator, IValidator<AddUserCommand> addUserCommandValidator)                               
         {
             _mediator = mediator;
-            _validator = validator;
+            _addUserCommandValidator = addUserCommandValidator;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] AddUserCommand command)
         {
-            ValidationResult result = await _validator.ValidateAsync(command);
+            ValidationResult result = await _addUserCommandValidator.ValidateAsync(command);
 
             if (!result.IsValid)
             {
@@ -40,7 +40,11 @@ namespace IdentityManagement.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(Guid id)
         {
-            var user = await _mediator.Send(new GetUserByIdQuery { Id = id });
+            var request = new GetUserByIdQuery { Id = id };
+
+            var user = await _mediator.Send(request);
+            if (user == null)
+                return NotFound();
             return Ok(user);
         }
     }

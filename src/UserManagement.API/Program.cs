@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using UserManagement.Application.Commands.AddUser;
 using UserManagement.Application.Mapping;
+using UserManagement.Application.Queries.GetUserById;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 builder.Services.AddTransient<IValidator<AddUserCommand>, AddUserCommandValidator>();
+builder.Services.AddTransient<IValidator<GetUserByIdQuery>, GetUserByIdValidator>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
