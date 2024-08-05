@@ -34,15 +34,14 @@ namespace IdentityManagement.API.Controllers
             }
 
             var userId = await _mediator.Send(command);
-
-            return Ok(userId);
+            return CreatedAtAction(nameof(GetById), new { id = userId }, userId);
         }
 
         [HttpPut]
         public async Task<IActionResult> ModifyUser([FromBody] ModifyUserCommand command)
         {
             await _mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("{id}")]
