@@ -4,6 +4,8 @@ using IdentityManagement.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Commands.AddUser;
+using UserManagement.Application.Commands.ModifyUser;
+using UserManagement.Application.Queries.GetAllUsers;
 using UserManagement.Application.Queries.GetUserById;
 
 namespace IdentityManagement.API.Controllers
@@ -21,7 +23,6 @@ namespace IdentityManagement.API.Controllers
             _addUserCommandValidator = addUserCommandValidator;
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] AddUserCommand command)
         {
@@ -37,6 +38,13 @@ namespace IdentityManagement.API.Controllers
             return Ok(userId);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> ModifyUser([FromBody] ModifyUserCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(Guid id)
         {
@@ -46,6 +54,13 @@ namespace IdentityManagement.API.Controllers
             if (user == null)
                 return NotFound();
             return Ok(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var products = await _mediator.Send(new GetAllUsersQuery());
+            return Ok(products);
         }
     }
 }

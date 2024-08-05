@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(IdentityManagementDbContext))]
-    [Migration("20240718030051_InitialCreate")]
+    [Migration("20240805190534_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,6 +42,9 @@ namespace UserManagement.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");

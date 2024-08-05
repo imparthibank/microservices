@@ -3,8 +3,8 @@ using IdentityManagement.Domain.Interfaces;
 using IdentityManagement.Infrastructure.Data;
 using IdentityManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using UserManagement.Application.Commands.AddUser;
+using UserManagement.Application.Commands.ModifyUser;
 using UserManagement.Application.Mapping;
 using UserManagement.Application.Queries.GetUserById;
 
@@ -17,14 +17,14 @@ builder.Services.AddDbContext<IdentityManagementDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Configure MediatR
-builder.Services.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(typeof(AddUserCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(AddUserCommandHandler).Assembly));
 
 // Configure AutoMapper
-//builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 builder.Services.AddTransient<IValidator<AddUserCommand>, AddUserCommandValidator>();
+builder.Services.AddTransient<IValidator<ModifyUserCommand>, ModifyUserCommandValidator>();
 builder.Services.AddTransient<IValidator<GetUserByIdQuery>, GetUserByIdValidator>();
 
 builder.Services.AddControllers();

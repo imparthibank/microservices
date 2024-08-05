@@ -1,14 +1,13 @@
-﻿namespace IdentityManagement.Domain.Entities
+﻿using MediatR;
+
+namespace UserManagement.Application.Commands.ModifyUser
 {
-    public class User
+    public class ModifyUserCommand : IRequest
     {
         public Guid Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Username { get; set; }
-        public string? Password { get; set; }
         public string? Email { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? ModifiedAt { get; set; }
     }
 }

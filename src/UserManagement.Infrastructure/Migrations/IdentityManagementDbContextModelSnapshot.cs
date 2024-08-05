@@ -40,6 +40,9 @@ namespace UserManagement.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
