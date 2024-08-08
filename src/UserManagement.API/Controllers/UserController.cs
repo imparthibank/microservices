@@ -17,7 +17,7 @@ namespace IdentityManagement.API.Controllers
         private readonly IMediator _mediator;
         private readonly IValidator<AddUserCommand> _addUserCommandValidator;
 
-        public UsersController(IMediator mediator, IValidator<AddUserCommand> addUserCommandValidator)                               
+        public UsersController(IMediator mediator, IValidator<AddUserCommand> addUserCommandValidator)
         {
             _mediator = mediator;
             _addUserCommandValidator = addUserCommandValidator;

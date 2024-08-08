@@ -50,5 +50,10 @@ namespace IdentityManagement.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> ExistUserAsync(string userName, string password)
+        {
+            return await _context.Users.AnyAsync(u => u.Username.Equals(userName) && u.Password.Equals(password));
+        }
     }
 }
