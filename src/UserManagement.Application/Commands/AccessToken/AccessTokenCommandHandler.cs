@@ -2,6 +2,7 @@
 using MediatR;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Services;
+using UserManagement.Application.Utils;
 
 namespace UserManagement.Application.Commands.AccessToken
 {
@@ -19,7 +20,8 @@ namespace UserManagement.Application.Commands.AccessToken
         public async Task<TokenDto> Handle(AccessTokenCommand request, CancellationToken cancellationToken)
         {
             var tokenResponse = new TokenDto();
-            if (!await _userRepository.ExistUserAsync(request.UserName, request.Password))
+            var user = await _userRepository.GetUserByUserNameAsync(request.UserName, cancellationToken);
+            if (user == null || !PasswordHasher.VerifyPassword(request.Password, user.Salt, user.PasswordHash))
             {
                 return tokenResponse;
             }

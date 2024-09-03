@@ -29,14 +29,14 @@ namespace IdentityManagement.Tests
         public async Task GetUserById_Returns_User()
         {
             var userId = Guid.NewGuid();
-            var user = new User { Id = userId, FirstName = "Jone", LastName = "Doe", Username = "TestUser", Email = "test@example.com", CreatedAt = DateTime.UtcNow };
+            var user = new User { Id = userId, FirstName = "Jone", LastName = "Doe", UserName = "TestUser", Email = "test@example.com", CreatedAt = DateTime.UtcNow };
             _userRepositoryMock.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
 
             var handler = new GetUserByIdHandler(_userRepositoryMock.Object, _mapper);
             var result = await handler.Handle(new GetUserByIdQuery { Id = userId }, default);
 
             result.Should().NotBeNull();
-            result.Username.Should().Be(user.Username);
+            result.Username.Should().Be(user.UserName);
             result.FirstName.Should().Be(user.FirstName);
             result.LastName.Should().Be(user.LastName);
             result.Email.Should().Be(user.Email);            

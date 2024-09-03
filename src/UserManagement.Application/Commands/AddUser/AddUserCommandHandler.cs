@@ -2,6 +2,7 @@
 using IdentityManagement.Domain.Entities;
 using IdentityManagement.Domain.Interfaces;
 using MediatR;
+using UserManagement.Application.Utils;
 
 namespace UserManagement.Application.Commands.AddUser
 {
@@ -16,6 +17,9 @@ namespace UserManagement.Application.Commands.AddUser
         }
         public async Task<Guid> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
+            var salt = PasswordHasher.GenerateSalt();
+            request.Password = PasswordHasher.HashPassword(request.Password, salt);
+            request.Salt = salt;
             var user = _mapper.Map<User>(request);
             await _userRepository.AddAsync(user);
             return user.Id;

@@ -51,9 +51,21 @@ namespace IdentityManagement.Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> ExistUserAsync(string userName, string password)
+        public async Task<User> GetUserByUserNameAsync(string userName, CancellationToken cancellationToken)
         {
-            return await _context.Users.AnyAsync(u => u.Username.Equals(userName) && u.Password.Equals(password));
+#pragma warning disable CS8603 // Possible null reference return.
+            return await _context.Users.SingleOrDefaultAsync(u => u.UserName.Equals(userName), cancellationToken);
+#pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        public async Task<bool> IsUserNameUniqueAsync(string userName, CancellationToken cancellationToken)
+        {
+            return await _context.Users.AllAsync(u => u.UserName != userName, cancellationToken);
+        }
+
+        public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
+        {
+            return await _context.Users.AllAsync(u => u.Email != email, cancellationToken);
         }
     }
 }
